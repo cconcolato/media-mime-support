@@ -213,29 +213,39 @@ vertical-align:middle;
 				return t;
 			}
 
+			function addParagraph(div, msg) {
+				var p = document.createElement("p");
+				p.innerHTML = msg;
+				div.appendChild(p);
+			}
 			var i;
+			addParagraph(results,"Checking support for MIME types registered in <a href='https://tools.ietf.org/html/rfc6381'>RFC6381</a>");
 			table = createTableHeader(results);
 			for(i in MIMES) { 
 				addMimeChecks(MIMES[i], "");
 			}
+			addParagraph(results,"Checking support for codecs registered in <a href='http://mp4ra.org/codecs.html'>MP4RA</a>");
 			table = createTableHeader(results);
 			for(i in CODECS) { 
 				var codec = CODECS[i].codec;
 				addMimeChecks('video/mp4; codecs="'+codec+'"', CODECS[i].description);
 			}
+			addParagraph(results,"Checking support for audio codecs with parameters");
 			table = createTableHeader(results);
 			for(i in AUDIO_CODECS) { 
 				var codec = AUDIO_CODECS[i].codec;
 				addMimeChecks('audio/mp4; codecs="'+codec+'"', AUDIO_CODECS[i].description);
 			}
+			addParagraph(results,"Checking support for AVC codecs with parameters");
 			table = createTableHeader(results);
 			{
+				var profile_idcs = [ 44, 83, 86, 100, 110, 118, 122, 128, 134, 138, 139, 244];
 				var sj, sk, sl;
-				for (var j = 0; j < 255; j++) {
-					var sj = j.toString(16);
+				for (var j in profile_idcs) {
+					var sj = profile_idcs[j].toString(16);
 					if (sj.length == 1) sj = "0"+sj;
 					for (var k = 0; k < 10; k++) {
-						sk = k.toString(16);
+						sk = (k*4).toString(16);
 						if (sk.length == 1) sk = "0"+sk;
 						for (var l = 0; l < 10; l++) {
 							sl = l.toString(16);
