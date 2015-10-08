@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">	
+<head>
+		<meta charset='utf-8'>
+		<title>Media MIME Support</title>
+		<style type="text/css">
+table
+{
+border-collapse:collapse;
+width:100%;
+max-width:700px;
+min-width:400px;
+text-align:center;
+}
+table,th, td
+{
+border: 1px solid gray;
+}
+
+th, td
+{
+height: 24px;
+padding:4px;
+vertical-align:middle;
+}
+
+.ok {
+	background-color: green;
+}
+
+.maybe {
+	background-color: orange;
+}
+
+.fail {
+	background-color: red;
+}
+		</style>
+</head>
+<body>
+	<div id="results">
+	</div>
+		<script>
+			var video = document.createElement("video");
+			var results = document.getElementById("results");
+
+			var MIMES = [
+				"video/mp4", 
+				"video/3gpp", 
+				"video/3gpp2", 
+				"video/quicktime", 
+				"audio/mp4", 
+				"audio/3gpp", 
+				"audio/3gpp2", 
+				"application/mp4", 
+				"application/mp21", 
+			];
+			var CODECS = [
+				{ codec:  "3gvo", description: 	"3GPP Video Orientation", type: "Metadata" },	 
+				{ codec:  "ac-3", description: 	"AC-3 audio", type: "Audio" },
+				{ codec:  "ac-4", description: 	"AC-4 audio", type: "Audio" },
+				{ codec:  "alac", description: 	"Apple lossless audio codec", type: "Audio" },
+				{ codec:  "alaw", description: 	"a-Law", type: "Audio" }, 	
+				{ codec:  "avc1", description: 	"Advanced Video Coding", type: "Video" },
+				{ codec:  "avc2", description: 	"Advanced Video Coding", type: "Video" }, 
+				{ codec:  "avc3", description: 	"Advanced Video Coding", type: "Video" }, 
+				{ codec:  "avc4", description: 	"Advanced Video Coding", type: "Video" },
+				{ codec:  "avcp", description: 	"Advanced Video Coding Parameters", type: "Video" }, 
+				{ codec:  "dra1", description: 	"DRA Audio", type: "Audio" },
+				{ codec:  "drac", description: 	"Dirac Video Coder", type: "Video" }, 
+				{ codec:  "dtsc", description: 	"DTS Coherent Acoustics audio", type: "Audio" }, 
+				{ codec:  "dtse", description: 	"DTS Express low bit rate audio, also known as DTS LBR", type: "Audio" },
+				{ codec:  "dtsh", description: 	"DTS-HD High Resolution Audio", type: "Audio" }, 
+				{ codec:  "dtsl", description: 	"DTS-HD Master Audio", type: "Audio" },
+				{ codec:  "dts+", description: 	"Enhancement layer for DTS layered audio", type: "Audio" },
+				{ codec:  "dts-", description: 	"Dependent base layer for DTS layered audio", type: "Audio" },
+				{ codec:  "dtsx", description: 	"DTS:X", type: "Audio" }, 
+				{ codec:  "dvav", description: 	"AVC-based “Dolby Vision”", type: "Video" }, 
+				{ codec:  "dvhe", description: 	"HEVC-based “Dolby Vision”", type: "Video" }, 
+				{ codec:  "ec-3", description: 	"Enhanced AC-3 audio", type: "Audio" }, 
+				{ codec:  "enca", description: 	"Encrypted/Protected audio", type: "Audio" }, 
+				{ codec:  "encs", description: 	"Encrypted Systems stream", type: "Systems"}, 
+				{ codec:  "enct", description: 	"Encrypted Text", type: "Text" },
+				{ codec:  "encv", description: 	"Encrypted/protected video", type: "Video" },
+				{ codec:  "fdp ", description: 	"File delivery hints", type:  "Hint" },
+				{ codec:  "g719", description: 	"ITU-T Recommendation G.719 (2008)", type: "Audio" },
+				{ codec:  "g726", description: 	"ITU-T Recommendation G.726 (1990)", type: "Audio" },
+				{ codec:  "hvc1", description: 	"High Efficiency Video Coding", type: "Video" },
+				{ codec:  "hev1", description: 	"High Efficiency Video Coding", type: "Video" },
+				{ codec:  "ixse", description: 	"DVB Track Level Index Track", type: "Metadata" },
+				{ codec:  "m2ts", description: 	"MPEG-2 transport stream for DMB", type:  "Hint" },
+				{ codec:  "m4ae", description: 	"MPEG-4 Audio Enhancement MP4v1", type: "Audio" }, 	
+				{ codec:  "m4ae", description: 	"MPEG-4 Audio Enhancement MP4v2", type: "Audio" },
+				{ codec:  "mett", description: 	"Text timed metadata that is not XML", type: "Metadata" },
+				{ codec:  "metx", description: 	"XML timed metadata", type: "Metadata" },
+				{ codec:  "mha1", description: 	"MPEG-H Audio (single stream)", type: "Audio" },
+				{ codec:  "mha2", description: 	"MPEG-H Audio (multi-stream)", type: "Audio" },
+				{ codec:  "mjp2", description: 	"Motion JPEG 2000", type: "Video" },
+				{ codec:  "mlix", description: 	"DVB Movie level index track", type: "Metadata" },
+				{ codec:  "mlpa", description: 	"MLP Audio", type: "Audio" },
+				{ codec:  "mp4a", description: 	"MPEG-4 Audio", type: "Audio" }, 
+				{ codec:  "mp4s", description: 	"MPEG-4 Systems", type: "Systems" },
+				{ codec:  "mp4v", description: 	"MPEG-4 Visual", type: "Video" },
+				{ codec:  "mvc1", description: 	"Multiview coding", type: "Video" },
+				{ codec:  "mvc2", description: 	"Multiview coding", type: "Video" },
+				{ codec:  "mvc3", description: 	"Multiview coding", type: "Video" },
+				{ codec:  "mvc4", description: 	"Multiview coding", type: "Video" },
+				{ codec:  "oksd", description: 	"OMA Keys", type: "Metadata" },
+				{ codec:  "Opus", description: 	"Opus audio coding", type: "Audio" },
+				{ codec:  "pm2t", description: 	"Protected MPEG-2 Transport", type:  "Hint" },
+				{ codec:  "prtp", description: 	"Protected RTP Reception", type:  "Hint" },
+				{ codec:  "raw ", description: 	"Uncompressed audio", type: "Audio" },	
+				{ codec:  "resv", description: 	"Restricted Video", type: "Video" },
+				{ codec:  "rm2t", description: 	"MPEG-2 Transport Reception", type:  "Hint" },
+				{ codec:  "rrtp", description: 	"RTP reception", type:  "Hint" },
+				{ codec:  "rsrp", description: 	"SRTP Reception", type:  "Hint" },
+				{ codec:  "rtp ", description: 	"RTP Hints", type:  "Hint" },
+				{ codec:  "s263", description: 	"ITU H.263 video (3GPP format)", type: "Video" },	
+				{ codec:  "samr", description: 	"Narrowband AMR voice", type: "Audio" },	
+				{ codec:  "sawb", description: 	"Wideband AMR voice", type: "Audio" },	
+				{ codec:  "sawp", description: 	"Extended AMR-WB (AMR-WB+)", type: "Audio" },	
+				{ codec:  "sevc", description: 	"EVRC Voice", type: "Audio" },
+				{ codec:  "sm2t", description: 	"MPEG-2 Transport Server", type:  "Hint" },
+				{ codec:  "sqcp", description: 	"13K Voice", type: "Audio" },
+				{ codec:  "srtp", description: 	"SRTP Hints", type:  "Hint" },
+				{ codec:  "ssmv", description: 	"SMV Voice", type: "Audio" },
+				{ codec:  "stpp", description: 	"Subtitles (Timed Text)", type: "Text" },
+				{ codec:  "svc1", description: 	"Scalable Video Coding", type: "Video" }, 
+				{ codec:  "svc2", description: 	"Scalable Video Coding", type: "Video" }, 
+				{ codec:  "svcM", description: 	"SVC Metadata", type: "Metadata" },
+				{ codec:  "tc64", description: 	"64 bit timecode samples", type:  "Timecode" },
+				{ codec:  "tmcd", description: 	"32 bit timecode samples", type:  "Timecode" },
+				{ codec:  "twos", description: 	"Uncompressed 16-bit audio", type: "Audio" },
+				{ codec:  "tx3g", description: 	"Timed Text stream", type: "Text" },
+				{ codec:  "ulaw", description: 	"Samples have been compressed using uLaw 2:1.", type: "Audio" },
+				{ codec:  "urim", description: 	"Binary timed metadata identified by URI", type: "Metadata" },
+				{ codec:  "vc-1", description: 	"SMPTE VC-1", type: "Video" },
+				{ codec:  "wvtt", description: 	"WebVTT", type: "Text" },
+			];
+
+			var AUDIO_CODECS = [			
+				{ codec: "mp4a.40", 	description: "MPEG-4 AAC"},
+				{ codec: "mp4a.40.1", 	description: "MPEG-4 AAC Main"},
+				{ codec: "mp4a.40.2", 	description: "MPEG-4 AAC-LC"},
+				{ codec: "mp4a.40.3", 	description: "MPEG-4 AAC-SSR"},
+				{ codec: "mp4a.40.4", 	description: "MPEG-4 AAC-LTP"},
+				{ codec: "mp4a.40.5", 	description: "MPEG-4 AAC-SBR"},
+				{ codec: "mp4a.40.6", 	description: "MPEG-4 AAC-Scalable"},
+				{ codec: "mp4a.40.7", 	description: "MPEG-4 TWIN VQ"},
+				{ codec: "mp4a.40.8", 	description: "MPEG-4 CELP"},
+				{ codec: "mp4a.40.9", 	description: "MPEG-4 HVCX"},
+				{ codec: "mp4a.40.12", 	description: "MPEG-4 TTSI"},
+				{ codec: "mp4a.40.13", 	description: "MPEG-4 Main Synthetic"},
+				{ codec: "mp4a.40.14", 	description: "MPEG-4 Wavetable Synthetis"},
+				{ codec: "mp4a.40.15", 	description: "MPEG-4 General Midi"},
+				{ codec: "mp4a.40.16", 	description: "MPEG-4 ALGO_SYNTH_AUDIO_FX"},
+				{ codec: "mp4a.40.17", 	description: "MPEG-4 ER_AAC_LC"},
+				{ codec: "mp4a.40.19", 	description: "MPEG-4 ER_AAC_LTP"},
+				{ codec: "mp4a.40.20", 	description: "MPEG-4 ER_AAC_SCALABLE"},
+				{ codec: "mp4a.40.21", 	description: "MPEG-4 ER_TWINVQ"},
+				{ codec: "mp4a.40.22", 	description: "MPEG-4 ER_BSAC"},
+				{ codec: "mp4a.40.23", 	description: "MPEG-4 ER_AAC_LD"},
+				{ codec: "mp4a.40.24", 	description: "MPEG-4 ER_CELP"},
+				{ codec: "mp4a.40.25", 	description: "MPEG-4 ER_HVXC"},
+				{ codec: "mp4a.40.26", 	description: "MPEG-4 ER_HILN"},
+				{ codec: "mp4a.40.27", 	description: "MPEG-4 ER_PARAMETRIC"},
+				{ codec: "mp4a.40.28", 	description: "MPEG-4 SSC"},
+				{ codec: "mp4a.40.29", 	description: "MPEG-4 AAC_PS"},
+				{ codec: "mp4a.40.32", 	description: "MPEG-4 LAYER1"},
+				{ codec: "mp4a.40.33", 	description: "MPEG-4 LAYER2"},
+				{ codec: "mp4a.40.34", 	description: "MPEG-4 LAYER3"},
+				{ codec: "mp4a.40.35", 	description: "MPEG-4 DST"},
+				{ codec: "mp4a.40.36", 	description: "MPEG-4 ALS"},
+				{ codec: "mp4a.66", 	description: "MPEG-2 AAC Main Profile"},
+				{ codec: "mp4a.67", 	description: "MPEG-2 AAC Low Complexity Profile"},
+				{ codec: "mp4a.68", 	description: "MPEG-2 AAC Scalable Sampling Rate Profile"},
+				{ codec: "mp4a.69", 	description: "MPEG-2 Audio Part 3"},
+				{ codec: "mp4a.6B", 	description: "MPEG-1 Part 3"},
+			];
+
+			var VIDEO_CODECS = [
+				{ codec: "avc1.42c00d", description: ""}, 
+				{ codec: "avc1.42c01e", description: ""},
+				{ codec: "avc1.4d001e", description: ""},
+				{ codec: "avc1.42c01f", description: ""},
+				{ codec: "avc1.42c028", description: ""},
+				{ codec: "avc1.4d001e", description: "H.264 Main Profile level 3.0"},  
+				{ codec: "avc1.42001e", description: "H.264 Baseline Profile level 3.0"},  
+			];
+
+			function addMimeChecks(mime,desc) { 
+				var tr;
+				var video_result;
+				var mediasource_result;
+				video_result = video.canPlayType(mime);
+				mediasource_result = MediaSource.isTypeSupported(mime);
+				tr = document.createElement("tr");
+				tr.innerHTML = "<td>"+desc+"</td><td>"+mime+"</td><td class='"+(video_result === ""? "fail" : (video_result === "maybe" ? "maybe": "ok"))+"'>"+(video_result.length > 0 ? video_result : "no")+"</td><td class='"+(mediasource_result ? "ok" : "fail")+"'>"+mediasource_result+"</td>";
+				table.appendChild(tr);
+			}
+
+			function createTableHeader(div) {
+				var t = document.createElement("table");
+				div.appendChild(t);
+				var content = "";
+				content += "<tr>";
+				content += "<th>Description</th>";
+				content += "<th>MIME</th>";
+				content += "<th><code>HTMLMediaElement.canPlayType</code></th>";
+				content += "<th><code>MediaSource.isTypeSupported</code></th>";
+				content += "</tr>";
+				t.innerHTML = content;
+				return t;
+			}
+
+			var i;
+			table = createTableHeader(results);
+			for(i in MIMES) { 
+				addMimeChecks(MIMES[i], "");
+			}
+			table = createTableHeader(results);
+			for(i in CODECS) { 
+				var codec = CODECS[i].codec;
+				addMimeChecks('video/mp4; codecs="'+codec+'"', CODECS[i].description);
+			}
+			table = createTableHeader(results);
+			for(i in AUDIO_CODECS) { 
+				var codec = AUDIO_CODECS[i].codec;
+				addMimeChecks('audio/mp4; codecs="'+codec+'"', AUDIO_CODECS[i].description);
+			}
+			table = createTableHeader(results);
+			{
+				var sj, sk, sl;
+				for (var j = 0; j < 255; j++) {
+					var sj = j.toString(16);
+					if (sj.length == 1) sj = "0"+sj;
+					for (var k = 0; k < 10; k++) {
+						sk = k.toString(16);
+						if (sk.length == 1) sk = "0"+sk;
+						for (var l = 0; l < 10; l++) {
+							sl = l.toString(16);
+							if (sl.length == 1) sl = "0"+sl;
+							addMimeChecks('video/mp4; codecs="avc1.'+sj+sk+sl+'"', "");
+						}
+					}
+				}
+			}
+		</script>
+</body>
+</html>
