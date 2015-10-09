@@ -286,10 +286,12 @@ vertical-align:middle;
 								}
 							}
 						}
-						for (var l in AVC_LEVELS) {
-							sl = AVC_LEVELS[l].toString(16);
-							if (sl.length == 1) sl = "0"+sl;
-							addMimeChecks('video/mp4; codecs="avc1.'+sj+sk+sl+'"', desc + " Level "+ AVC_LEVELS[l]/10);
+						if (desc.length > 0) {
+							for (var l in AVC_LEVELS) {
+								sl = AVC_LEVELS[l].toString(16);
+								if (sl.length == 1) sl = "0"+sl;
+								addMimeChecks('video/mp4; codecs="avc1.'+sj+sk+sl+'"', desc + " Level "+ AVC_LEVELS[l]/10);
+							}
 						}
 					}
 				}
