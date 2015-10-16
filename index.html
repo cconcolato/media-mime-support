@@ -38,6 +38,8 @@ vertical-align:middle;
 		</style>
 </head>
 <body>
+	<h1>Support for ISOBMFF-based MIME types in Browsers</h1>
+	<p>This page allows you to check if a given ISOBMFF-based MIME type is supported in your browser. Given the wide variety of ISOBMFF files, it is sometimes difficult to know in advance if a MIME type will be supported. This page shows test results using the <a href="http://www.w3.org/TR/html5/embedded-content-0.html#dom-navigator-canplaytype"><code>HTMLMediaElement.canPlayType</code></a> and <a href="http://w3c.github.io/media-source/#widl-MediaSource-isTypeSupported-boolean-DOMString-type"><code>MediaSource.isTypeSupported</code></a> methods for various versions of ISOBMFF MIME types, in particular for codecs as registered on the <a href="http://mp4ra.org">MP4 Registration Authority</a>. You can check <a href="#general_mimes">General MIME Types</a>, <a href="#general_codecs">General track codecs</a>, <a href="#audio_codecs">Audio codecs</a> and <a href="#avc_codecs">Video codecs, in particular all AVC profiles</a>.</p>
 	<div id="results">
 	</div>
 		<script>
@@ -237,30 +239,31 @@ vertical-align:middle;
 				return t;
 			}
 
-			function addParagraph(div, msg) {
+			function addParagraph(div, id, msg) {
 				var p = document.createElement("p");
+				p.setAttribute("id", id);
 				p.innerHTML = msg;
 				div.appendChild(p);
 			}
 			var i;
-			addParagraph(results,"Checking support for MIME types registered in <a href='https://tools.ietf.org/html/rfc6381'>RFC6381</a>");
+			addParagraph(results, "general_mimes", "Checking support for MIME types registered in <a href='https://tools.ietf.org/html/rfc6381'>RFC6381</a>");
 			table = createTableHeader(results);
 			for(i in MIMES) { 
 				addMimeChecks(MIMES[i], "");
 			}
-			addParagraph(results,"Checking support for codecs registered in <a href='http://mp4ra.org/codecs.html'>MP4RA</a>");
+			addParagraph(results, "general_codecs", "Checking support for codecs registered in <a href='http://mp4ra.org/codecs.html'>MP4RA</a>");
 			table = createTableHeader(results);
 			for(i in CODECS) { 
 				var codec = CODECS[i].codec;
 				addMimeChecks('video/mp4; codecs="'+codec+'"', CODECS[i].description);
 			}
-			addParagraph(results,"Checking support for audio codecs with parameters");
+			addParagraph(results, "audio_codecs", "Checking support for audio codecs with parameters");
 			table = createTableHeader(results);
 			for(i in AUDIO_CODECS) { 
 				var codec = AUDIO_CODECS[i].codec;
 				addMimeChecks('audio/mp4; codecs="'+codec+'"', AUDIO_CODECS[i].description);
 			}
-			addParagraph(results,"Checking support for AVC codecs with parameters");
+			addParagraph(results, "avc_codecs", "Checking support for AVC codecs with parameters");
 			table = createTableHeader(results);
 			{
 				var sj, sk, sl;
