@@ -1,4 +1,4 @@
-function addAVCChecks(add)
+function addAVCChecks(add,table)
 {
 	var AVC_PROFILES_DESC = [
 		//{ constrained_set0_flag: true },
@@ -51,7 +51,7 @@ function addAVCChecks(add)
 				for (var l in AVC_LEVELS) {
 					sl = AVC_LEVELS[l].toString(16);
 					if (sl.length == 1) sl = "0"+sl;
-					add('video/mp4; codecs="avc1.'+sj+sk+sl+'"', desc + " Level "+ AVC_LEVELS[l]/10);
+					add(table,'video/mp4; codecs="avc1.'+sj+sk+sl+'"', desc + " Level "+ AVC_LEVELS[l]/10);
 				}
 			}
 		}
