@@ -9,6 +9,7 @@
 		<script type="text/javascript" src="codecs-audio.js"></script>
 		<script type="text/javascript" src="codecs-video.js"></script>
 		<script type="text/javascript" src="codecs-video-avc.js"></script>
+		<script type="text/javascript" src="index.js"></script>
 </head>
 <body>
 	<script>
@@ -22,103 +23,10 @@
 
 	</script>
 	<h1>Support for ISOBMFF-based MIME types in Browsers</h1>
-	<p>This page allows you to check if a given ISOBMFF-based MIME type is supported in your browser. Given the wide variety of ISOBMFF files, it is sometimes difficult to know in advance if a MIME type will be supported. This page shows test results using the <a href="http://www.w3.org/TR/html5/embedded-content-0.html#dom-navigator-canplaytype"><code>HTMLMediaElement.canPlayType</code></a> and <a href="http://w3c.github.io/media-source/#widl-MediaSource-isTypeSupported-boolean-DOMString-type"><code>MediaSource.isTypeSupported</code></a> methods for various versions of ISOBMFF MIME types, in particular for codecs as registered on the <a href="http://mp4ra.org">MP4 Registration Authority</a>. You can check <a href="#general_mimes">General MIME Types</a>, <a href="#general_codecs">General track codecs</a>, <a href="#audio_codecs">Audio codecs</a> and <a href="#avc_codecs">Video codecs, in particular all AVC profiles</a>.</p>
+	<p>This page allows you to check if a given ISOBMFF-based MIME type is supported in your browser. Given the wide variety of ISOBMFF files, it is sometimes difficult to know in advance if a MIME type will be supported. This page shows test results using the <a href="http://www.w3.org/TR/html5/embedded-content-0.html#dom-navigator-canplaytype"><code>HTMLMediaElement.canPlayType</code></a> and <a href="http://w3c.github.io/media-source/#widl-MediaSource-isTypeSupported-boolean-DOMString-type"><code>MediaSource.isTypeSupported</code></a> methods for various versions of ISOBMFF MIME types, in particular for codecs as registered on the <a href="http://mp4ra.org">MP4 Registration Authority</a>.</p>
+	<p>You can check <a href="#general_mimes">General MIME Types</a>, <a href="#general_codecs">General track codecs</a>, <a href="#audio_codecs">Audio codecs</a> and <a href="#avc_codecs">Video codecs, in particular all AVC profiles</a>.</p>
 	<p>The code for this page is hosted on GitHub <a href="https://github.com/cconcolato/media-mime-support">here</a>. If you see any mistake, please file an issue or submit a pull request.</p>
 	<div id="results">
 	</div>
-		<script>
-			var video = document.createElement("video");
-			var results = document.getElementById("results");
-
-			function addMimeChecks(mime,desc) { 
-				var tr;
-				var video_result;
-				var mediasource_result;
-				video_result = video.canPlayType(mime);
-				try { 
-					mediasource_result = MediaSource.isTypeSupported(mime); 
-				} catch (e) { 
-					mediasource_result = e.message; 
-				}
-				tr = document.createElement("tr");
-				tr.innerHTML = "<td id='"+mime+"'>"+desc+"</td><td>"+mime+"</td><td class='"+(video_result === ""? "fail" : (video_result === "maybe" ? "maybe": "ok"))+"'>"+(video_result.length > 0 ? video_result : "no")+"</td><td class='"+(mediasource_result === true ? "ok" : "fail")+"'>"+mediasource_result+"</td>";
-				table.appendChild(tr);
-			}
-
-			function createTableHeader(div) {
-				var t = document.createElement("table");
-				div.appendChild(t);
-				var content = "";
-				content += "<tr>";
-				content += "<th>Description</th>";
-				content += "<th>MIME</th>";
-				content += "<th><code>HTMLMediaElement.canPlayType</code></th>";
-				content += "<th><code>MediaSource.isTypeSupported</code></th>";
-				content += "</tr>";
-				t.innerHTML = content;
-				return t;
-			}
-
-			function addParagraph(div, id, msg) {
-				var p = document.createElement("p");
-				p.setAttribute("id", id);
-				p.innerHTML = msg;
-				div.appendChild(p);
-			}
-			var i;
-			addParagraph(results, "general_mimes", "Checking support for MIME types registered in <a href='https://tools.ietf.org/html/rfc6381'>RFC6381</a>");
-			table = createTableHeader(results);
-			for(i in MIMES) { 
-				addMimeChecks(MIMES[i], "");
-			}
-			addParagraph(results, "general_codecs", "Checking support for codecs registered in <a href='http://mp4ra.org/codecs.html'>MP4RA</a>");
-			table = createTableHeader(results);
-			for(i in CODECS) { 
-				var codec = CODECS[i].codec;
-				addMimeChecks('video/mp4; codecs="'+codec+'"', CODECS[i].description);
-			}
-			addParagraph(results, "audio_codecs", "Checking support for audio codecs with parameters");
-			table = createTableHeader(results);
-			for(i in AUDIO_CODECS) { 
-				var codec = AUDIO_CODECS[i].codec;
-				addMimeChecks('audio/mp4; codecs="'+codec+'"', AUDIO_CODECS[i].description);
-			}
-			addParagraph(results, "avc_codecs", "Checking support for AVC codecs with parameters");
-			table = createTableHeader(results);
-			{
-				var sj, sk, sl;
-				for (var j in AVC_PROFILES_IDC) {
-					var sj = AVC_PROFILES_IDC[j].toString(16);
-					if (sj.length == 1) sj = "0"+sj;
-					for (var k in AVC_CONSTRAINTS) {
-						sk = AVC_CONSTRAINTS[k].toString(16);
-						if (sk.length == 1) sk = "0"+sk;
-
-						var desc = "";
-						for (i in AVC_PROFILES_DESC) {
-							if (AVC_PROFILES_IDC[j] == AVC_PROFILES_DESC[i].profile_idc) {
-								var c = ((AVC_PROFILES_DESC[i].constrained_set0_flag ? 1 : 0) << 7) |
-								        ((AVC_PROFILES_DESC[i].constrained_set1_flag ? 1 : 0) << 6) |
-								        ((AVC_PROFILES_DESC[i].constrained_set2_flag ? 1 : 0) << 5) |
-								        ((AVC_PROFILES_DESC[i].constrained_set3_flag ? 1 : 0) << 4) |
-								        ((AVC_PROFILES_DESC[i].constrained_set4_flag ? 1 : 0) << 3) |
-								        ((AVC_PROFILES_DESC[i].constrained_set5_flag ? 1 : 0) << 2);
-								if (c === AVC_CONSTRAINTS[k]) {
-									desc = AVC_PROFILES_DESC[i].description;
-									break;
-								}
-							}
-						}
-						if (desc.length > 0) {
-							for (var l in AVC_LEVELS) {
-								sl = AVC_LEVELS[l].toString(16);
-								if (sl.length == 1) sl = "0"+sl;
-								addMimeChecks('video/mp4; codecs="avc1.'+sj+sk+sl+'"', desc + " Level "+ AVC_LEVELS[l]/10);
-							}
-						}
-					}
-				}
-			}
-		</script>
 </body>
 </html>
