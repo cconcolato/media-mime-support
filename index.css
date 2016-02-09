@@ -1,0 +1,35 @@
+body {
+	max-width: 800px;
+	margin: auto;
+	font-family: sans-serif;
+}
+
+table {
+	border-collapse:collapse;
+	width:100%;
+	max-width:700px;
+	min-width:400px;
+	text-align:center;
+}
+
+table, th, td {
+	border: 1px solid gray;
+}
+
+th, td {
+	height: 24px;
+	padding:4px;
+	vertical-align:middle;
+}
+
+.ok {
+	background-color: green;
+}
+
+.maybe {
+	background-color: orange;
+}
+
+.fail {
+	background-color: red;
+}
