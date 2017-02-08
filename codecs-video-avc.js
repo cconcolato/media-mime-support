@@ -7,6 +7,7 @@ function addAVCChecks(add,table)
 		{ profile_idc: 66, description: "Baseline" },
 		{ profile_idc: 66, description: "Constrained Baseline", constrained_set1_flag: true},
 		{ profile_idc: 77, description: "Main" },
+        { profile_idc: 77, description: "Constrained Main", constrained_set1_flag: true},
 		{ profile_idc: 88, description: "Extended" },
 		{ profile_idc: 100, description: "High", constrained_set4_flag: false },
 		{ profile_idc: 100, description: "High Progressive", constrained_set4_flag: true },
@@ -17,7 +18,7 @@ function addAVCChecks(add,table)
 		{ profile_idc: 122, description: "High 4:2:2 Intra", constrained_set3_flag: true },
 		{ profile_idc: 244, description: "High 4:4:4 Predictive" },
 		{ profile_idc: 244, description: "High 4:4:4 Intra", constrained_set3_flag: true },
-		{ profile_idc: 44, description: "CAVLC 4:4:4 Intra" },
+		{ profile_idc: 44, description: "CAVLC 4:4:4 Intra" }
 	];
 
 	var AVC_PROFILES_IDC = [ 66, 77, 88, 100, 110, 122, 244, 44];
