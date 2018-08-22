@@ -41,27 +41,32 @@ window.onload = function() {
 
 	addParagraph(results, "general_mimes", "Checking support for MIME types registered in <a href='https://tools.ietf.org/html/rfc6381'>RFC6381</a>");
 	table = createTableHeader(results);
-	for(i in MIMES) { 
+	for(i in MIMES) {
 		addMimeChecks(table,MIMES[i], "");
 	}
 	addParagraph(results, "general_codecs", "Checking support for codecs registered in <a href='http://mp4ra.org/codecs.html'>MP4RA</a>");
 	table = createTableHeader(results);
-	for(i in CODECS) { 
+	for(i in CODECS) {
 		var codec = CODECS[i].codec;
 		addMimeChecks(table,'video/mp4; codecs="'+codec+'"', CODECS[i].description);
 	}
 	addParagraph(results, "audio_codecs", "Checking support for audio codecs with parameters");
 	table = createTableHeader(results);
-	for(i in AUDIO_CODECS) { 
+	for(i in AUDIO_CODECS) {
 		var codec = AUDIO_CODECS[i].codec;
 		addMimeChecks(table, 'audio/mp4; codecs="'+codec+'"', AUDIO_CODECS[i].description);
 	}
 	addParagraph(results, "avc_codecs", "Checking support for AVC codecs with parameters");
 	table = createTableHeader(results);
 	addAVCChecks(addMimeChecks, table);
+	addParagraph(results, "other_video_codecs", "Checking support for other codecs such as VP9, AV1, HEVC");
+	table = createTableHeader(results);
+	for(i in VIDEO_CODECS) {
+		addMimeChecks(table, 'video/mp4; codecs="'+VIDEO_CODECS[i].codec+'"', VIDEO_CODECS[i].description);
+	}
 };
 
-function addOwnTest(id, v) {	
+function addOwnTest(id, v) {
 	var results = document.getElementById(id);
 	results.innerHTML='';
 	table = createTableHeader(results);
