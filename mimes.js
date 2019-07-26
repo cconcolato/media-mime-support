@@ -8,4 +8,5 @@ var MIMES = [
 	"audio/3gpp2", 
 	"application/mp4", 
 	"application/mp21", 
+	"application/vnd.apple.mpegurl",
 ];
