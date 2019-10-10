@@ -51,7 +51,7 @@ function addAV1Checks(add,table)
 													'.'+COLOR_PRIMARIES_VALUES[colorPrimary]+
 													'.'+TRANSER_CHARACTERISTICS_VALUES[transfer]+
 													'.'+MATRIX_COEFFICIENT_VALUES[matrix]+
-													'.'+VIDEO_FULL_RANGE_FLAG_VALUES[range]);
+													'.'+VIDEO_FULL_RANGE_FLAG_VALUES[range]+'"');
 											}
 										}
 									}
@@ -61,7 +61,7 @@ function addAV1Checks(add,table)
 							add(table,'video/mp4; codecs="av01.'+PROFILES_VALUES[profile]+
 								'.'+levelString+
 								''+TIER_VALUES[tier]+
-								'.'+depthString, 
+								'.'+depthString+'"', 
 								'AV1 '+PROFILES_NAMES[profile]+' Profile, level '+LEVEL_NAMES[level]+', '+TIER_NAMES[tier]+ ' tier, '+DEPTH_VALUES[depth]+' bits');
 						}
 					}
