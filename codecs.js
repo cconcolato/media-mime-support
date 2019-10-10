@@ -9,6 +9,7 @@ var CODECS = [
 	{ codec:  "ac-4", description: 	"AC-4 audio", type: "Audio" },
 	{ codec:  "alac", description: 	"Apple lossless audio codec", type: "Audio" },
 	{ codec:  "alaw", description: 	"a-Law", type: "Audio" }, 	
+	{ codec:  "av01", description: 	"AV1 video", type: "Video" },
 	{ codec:  "avc1", description: 	"Advanced Video Coding", type: "Video" },
 	{ codec:  "avc2", description: 	"Advanced Video Coding", type: "Video" }, 
 	{ codec:  "avc3", description: 	"Advanced Video Coding", type: "Video" }, 
