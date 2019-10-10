@@ -59,7 +59,12 @@ window.onload = function() {
 	addParagraph(results, "avc_codecs", "Checking support for AVC codecs with parameters");
 	table = createTableHeader(results);
 	addAVCChecks(addMimeChecks, table);
-	addParagraph(results, "other_video_codecs", "Checking support for other codecs such as VP9, AV1, HEVC");
+
+	addParagraph(results, "av1_codecs", "Checking support for AV1 codecs with parameters");
+	table = createTableHeader(results);
+	addAV1Checks(addMimeChecks, table);
+
+	addParagraph(results, "other_video_codecs", "Checking support for other codecs such as VP9, HEVC");
 	table = createTableHeader(results);
 	for(i in VIDEO_CODECS) {
 		addMimeChecks(table, 'video/mp4; codecs="'+VIDEO_CODECS[i].codec+'"', VIDEO_CODECS[i].description);
