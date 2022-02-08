@@ -42,16 +42,6 @@ window.onload = function() {
 	}
 	const runbutton = document.getElementById('runbutton');
 	runbutton.onclick = run;
-
-	// ctx.width_min = 0;
-	// ctx.height_min = 0;
-	// ctx.width_max = 20000;
-	// ctx.height_max = 100;
-	// ctx.step = 200;
-	// ctx.svg.setAttribute("viewBox","0 0 "+ctx.width_max+" "+ctx.height_max);
-	// for (let bitrate = 1; bitrate < 20000; bitrate += ctx.step) {
-	// 	testConfig(1920, 720, bitrate, 29.97, ctx);
-	// }
 }
 
 function testConfig(mime, codecs, vw, vh, b, fps, ctx, wantsSupported, wantsPowerEfficient, wantsSmooth) {
