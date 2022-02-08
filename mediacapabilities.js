@@ -30,8 +30,8 @@ window.onload = function() {
         	ctx.svg.removeChild(ctx.svg.firstChild);
     	}	
 
-		for (let w = ctx.width_min; w < ctx.width_max; w+=ctx.stepw) {
-			for (let h = ctx.height_min; h < ctx.height_max; h+=ctx.steph) {
+		for (let w = ctx.stepw; w <= ctx.width_max; w+=ctx.stepw) {
+			for (let h = ctx.steph; h <= ctx.height_max; h+=ctx.steph) {
 				testConfig(mime, codecs,
 					w, h, bitrate, fps, ctx,
 					supportedCheckbox.checked,
@@ -60,7 +60,7 @@ function testConfig(mime, codecs, vw, vh, b, fps, ctx, wantsSupported, wantsPowe
 
 	navigator.mediaCapabilities.decodingInfo(configuration)
 		    .then((result) => {
-	    		drawValue(ctx, vw, vh, 
+	    		drawValue(ctx, configuration, vw, vh, 
 	    			result.supported && wantsSupported, 
 	    			result.powerEfficient && wantsPowerEfficient, 
 	    			result.smooth && wantsSmooth);
@@ -70,11 +70,11 @@ function testConfig(mime, codecs, vw, vh, b, fps, ctx, wantsSupported, wantsPowe
 		    });
 }
 
-function drawValue(ctx, w, h, supported, powerEfficient, smooth) {
+function drawValue(ctx, configuration, w, h, supported, powerEfficient, smooth) {
 	const scalew = ctx.stepw*.9;
-	const offsetw = ctx.stepw*.05;
+	const offsetw = ctx.stepw*.05-ctx.stepw;
 	const scaleh = ctx.steph*.9;
-	const offseth = ctx.steph*.05;
+	const offseth = ctx.steph*.05-ctx.steph;
 	let rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
 	rect.setAttribute("x",w+offsetw+"");
 	rect.setAttribute("y",h+offseth+"");
@@ -86,6 +86,7 @@ function drawValue(ctx, w, h, supported, powerEfficient, smooth) {
 	tooltipString += ("\nsupported:"+supported);
 	tooltipString += ("\npowerEfficient:"+powerEfficient);
 	tooltipString += ("\nsmooth:"+smooth);
+	tooltipString += ("\nconfiguration:"+JSON.stringify(configuration));
 	tooltip.textContent = tooltipString;
 	rect.appendChild(tooltip);
 	ctx.svg.appendChild(rect);
