@@ -4,6 +4,10 @@ window.onload = function() {
 	const fpsselector = document.getElementById("fps-select");
 	const bitrateeselector = document.getElementById("bitrate-select");
 	const dimensionselector = document.getElementById("maxdimension-select");
+	const hdrselector = document.getElementById("hdr-select");
+	const colorselector = document.getElementById("color-select");
+	const tranferselector = document.getElementById("transfer-select");
+	const alphaCheckbox = document.getElementById("alpha");
 
 	const supportedCheckbox = document.getElementById("supported");
 	const smoothCheckbox = document.getElementById("smooth");
@@ -13,11 +17,14 @@ window.onload = function() {
 	ctx.svg = document.getElementById('s');
 	
 	function run() {
-		const mime = (mimeselector.value.length > 0 ? mimeselector.value : "video/mp4");
-		const codecs = (codecsselector.value.length > 0 ? codecsselector.value : "avc1.640028");
-		const fps = (fpsselector.value.length > 0 ? +fpsselector.value : 30);
-		const bitrate = (bitrateeselector.value.length > 0 ? +bitrateeselector.value : 1000000);
-		const dimension = (dimensionselector.value.length > 0 ? dimensionselector.value : "3840x2160");
+		const mime = mimeselector.value;
+		const codecs = codecsselector.value;
+		const fps = fpsselector.value;
+		const bitrate = bitrateeselector.value;
+		const dimension = dimensionselector.value;
+		const hdrvalue = hdrselector.value;
+		const colorvalue = colorselector.value;
+		const transfervalue = tranferselector.value;
 
 		ctx.width_min = 0;
 		ctx.height_min = 0;
@@ -33,7 +40,10 @@ window.onload = function() {
 		for (let w = ctx.stepw; w <= ctx.width_max; w+=ctx.stepw) {
 			for (let h = ctx.steph; h <= ctx.height_max; h+=ctx.steph) {
 				testConfig(mime, codecs,
-					w, h, bitrate, fps, ctx,
+					w, h, bitrate, fps, 
+					alphaCheckbox.checked,
+					hdrvalue, colorvalue, transfervalue,
+					ctx,
 					supportedCheckbox.checked,
 					powerEfficient.checked,
 					smoothCheckbox.checked);
@@ -44,7 +54,8 @@ window.onload = function() {
 	runbutton.onclick = run;
 }
 
-function testConfig(mime, codecs, vw, vh, b, fps, ctx, wantsSupported, wantsPowerEfficient, wantsSmooth) {
+function testConfig(mime, codecs, vw, vh, b, fps, alpha, hdr, color, transfer,
+					ctx, wantsSupported, wantsPowerEfficient, wantsSmooth) {
 	const fullmime = mime+';codecs='+codecs;
 	//const fullmime = 'video/mp4;codecs=avc1.640028';
 	const configuration = {
@@ -54,7 +65,11 @@ function testConfig(mime, codecs, vw, vh, b, fps, ctx, wantsSupported, wantsPowe
 			width: vw,
 			height: vh,
 			bitrate: b,
-			framerate: fps
+			framerate: fps,
+			hasAlphaChannel: alpha,
+			hdrMetadataType: hdr,
+			colorGamut: color,
+			transferFunction: transfer
 		}
 	};
 
