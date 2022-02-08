@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Testing Media Capabilities</title>
+	<script src="mediacapabilities.js"></script>
+</head>
+<body>
+	<p>Configuration options:</p>
+	<label for="mime-select">MIME type:</label>
+	<select id="mime-select">
+	    <option value="">--Please choose the MIME type--</option>
+	    <option value="video/mp4">video/mp4</option>
+	</select>
+	<br>
+	<label for="codecs-select">Codecs parameter:</label>
+	<select id="codecs-select">
+	    <option value="">--Please choose the Codecs parameter--</option>
+	    <option value="avc1.640028">AVC High Level 4 (avc1.640028)</option>
+	    <option value="av01.0.08H.10">AV1 Main Profile, level 4.0, High tier, 10 bits (av01.0.08H.10)</option>
+	    <option value="hev1.1.6.L93.B0">HEVC progressive, non-packed stream, Main Profile, Main Tier, Level 3.1	(hev1.1.6.L93.B0)</option>
+	    <option value="vp09.00.50.08">VP9, Profile 0, Level 5, 8-bit (vp09.00.50.08)</option>
+	</select>
+	<br>
+	<label for="fps-select">FPS parameter:</label>
+	<select id="fps-select">
+	    <option value="">--Please choose the FPS--</option>
+	    <option value="30">30 fps</option>
+	    <option value="60">60 fps</option>
+	    <option value="120">120 fps</option>
+	    <option value="240">240 fps</option>
+	</select>
+	<br>
+	<label for="bitrate-select">Bitrate:</label>
+	<select id="bitrate-select">
+	    <option value="">--Please choose the bitrate--</option>
+	    <option value="100000">100 Kbps</option>
+	    <option value="1000000">1 Mbps</option>
+	    <option value="10000000">10 Mbps</option>
+	    <option value="100000000">100 Mbps</option>
+	</select>
+	<br>
+	<label for="maxdimension-select">Max width/height:</label>
+	<select id="maxdimension-select">
+	    <option value="">--Please choose the max dimension--</option>
+	    <option value="1920x720">720p (1920x720)</option>
+	    <option value="1920x1080">1080p (1920x1080)</option>
+	    <option value="3840x2160">4K (3840x2160)</option>
+	    <option value="7680x4320">8K (7680x4320)</option>
+	    <option value="15360x8640">16K (15360x8640)</option>
+	</select>
+	<br>
+	<p>Media Capabilities Results:<p>
+	<input type="checkbox" id="supported" name="supported" checked>
+	<label for="supported" style="color:red">Supported</label><br>
+	<input type="checkbox" id="powerEfficient" name="powerEfficient">
+	<label for="powerEfficient" style="color:green">Power Efficient</label><br>
+	<input type="checkbox" id="smooth" name="smooth">
+	<label for="smooth" style="color:blue">Smooth</label><br>
+	<br>
+	<button id="runbutton">Run!</button> 
+	<br>
+	<canvas id="c"></canvas>
+	<svg id="s" width="500px" style="background-color:lightgrey"></svg>
+</body>
+</html>
