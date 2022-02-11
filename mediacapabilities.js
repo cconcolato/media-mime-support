@@ -15,8 +15,10 @@ function addCodecsGroup(select, desc, getter) {
 window.onload = function() {
 	const mimeselector = document.getElementById("mime-select");
 	const codecsselector = document.getElementById("codecs-select");
+	addCodecsGroup(codecsselector, "VP9 codecs", getAllVP9Codecs);
 	addCodecsGroup(codecsselector, "AV1 codecs", getAllAV1Codecs);
 	addCodecsGroup(codecsselector, "AVC codecs", getAllAVCCodecs);
+	addCodecsGroup(codecsselector, "AVC codecs", getAllHEVCCodecs);
 	const fpsselector = document.getElementById("fps-select");
 	const bitrateeselector = document.getElementById("bitrate-select");
 	const dimensionselector = document.getElementById("maxdimension-select");

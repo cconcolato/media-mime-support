@@ -66,9 +66,8 @@ window.onload = function() {
 
 	addParagraph(results, "other_video_codecs", "Checking support for other codecs such as VP9, HEVC");
 	table = createTableHeader(results);
-	for(i in VIDEO_CODECS) {
-		addMimeChecks(table, 'video/mp4; codecs="'+VIDEO_CODECS[i].codec+'"', VIDEO_CODECS[i].description);
-	}
+	addChecks(getAllVP9Codecs, addMimeChecks, table);
+	addChecks(getAllHEVCCodecs, addMimeChecks, table);
 };
 
 function addOwnTest(id, v) {
