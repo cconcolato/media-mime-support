@@ -78,7 +78,7 @@ function addOwnTest(id, v) {
 	addMimeChecks(table, 'video/mp4; codecs="'+v+'"', "");
 }
 
-function addChecks(getAllMimes, add,table)
+function addChecks(getAllCodecs, add,table)
 {
 	getAllCodecs().forEach(e => add(table, 'video/mp4; codecs="'+e.codec+'"', e.description));
 }
