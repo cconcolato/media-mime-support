@@ -13,75 +13,78 @@
 	<h1>Testing Media Capabilities</h1>
 	<p>This page is dedicated to testing the <a href="https://w3c.github.io/media-capabilities/">Media Capabilities API</a>. Checkout this <a href="index.html">other page</a>, if you're interested in ISOBMFF MIME types.</p>
 
-	<p>Configuration options:</p>
-	<label for="mime-select">MIME type:</label>
-	<select id="mime-select">
-	    <option value="video/mp4">video/mp4</option>
-	</select>
-	<br>
-	<label for="codecs-select">Codecs parameter:</label>
-	<select id="codecs-select">
-	    <option value="avc1.640028">AVC High Level 4 (avc1.640028)</option>
-	    <option value="av01.0.08H.10">AV1 Main Profile, level 4.0, High tier, 10 bits (av01.0.08H.10)</option>
-	    <option value="hev1.1.6.L93.B0">HEVC progressive, non-packed stream, Main Profile, Main Tier, Level 3.1	(hev1.1.6.L93.B0)</option>
-	    <option value="vp09.00.50.08">VP9, Profile 0, Level 5, 8-bit (vp09.00.50.08)</option>
-	</select>
-	<br>
-	<label for="fps-select">FPS parameter:</label>
-	<select id="fps-select">
-	    <option value="30">30 fps</option>
-	    <option value="60">60 fps</option>
-	    <option value="120">120 fps</option>
-	    <option value="240">240 fps</option>
-	</select>
-	<br>
-	<label for="bitrate-select">Bitrate:</label>
-	<select id="bitrate-select">
-	    <option value="100000">100 Kbps</option>
-	    <option value="1000000">1 Mbps</option>
-	    <option value="10000000">10 Mbps</option>
-	    <option value="100000000">100 Mbps</option>
-	</select>
-	<br>
-	<label for="maxdimension-select">Max width/height:</label>
-	<select id="maxdimension-select">
-	    <option value="1920x720">720p (1920x720)</option>
-	    <option value="1920x1080">1080p (1920x1080)</option>
-	    <option value="3840x2160">4K (3840x2160)</option>
-	    <option value="7680x4320">8K (7680x4320)</option>
-	    <option value="15360x8640">16K (15360x8640)</option>
-	</select>
-	<br>
-	<label for="advanced">Use HDR/Alpha Config (not working in Safari)</label>
-	<input type="checkbox" id="advanced" name="advanced">
-	<br>
 	<fieldset>
-		<label for="alpha">Has Alpha Channel</label>
-		<input type="checkbox" id="alpha" name="alpha">
-		<br>
-		<label for="hdr-select">HDR Metadata Type:</label>
-		<select id="hdr-select">
-		    <option value="">none</option>
-		    <option value="smpteSt2086">SMPTE ST-2086</option>
-		    <option value="smpteSt2094-10">SMPTE ST-2094-10</option>
-		    <option value="smpteSt2094-40">SMPTE ST-2094-40</option>
+		<legend>Configuration options:</legend>
+		<label for="mime-select">MIME type:</label>
+		<select id="mime-select">
+		    <option value="video/mp4">video/mp4</option>
 		</select>
 		<br>
-		<label for="color-select">Color Gamut:</label>
-		<select id="color-select">
-		    <option value="">none</option>
-		    <option value="srgb">sRGB</option>
-		    <option value="p3">P3</option>
-		    <option value="rec2020">REC 2020</option>
+		<label for="codecs-select">Codecs parameter:</label>
+		<select id="codecs-select">
+		    <option value="avc1.640028">AVC High Level 4 (avc1.640028)</option>
+		    <option value="av01.0.08H.10">AV1 Main Profile, level 4.0, High tier, 10 bits (av01.0.08H.10)</option>
+		    <option value="hev1.1.6.L93.B0">HEVC progressive, non-packed stream, Main Profile, Main Tier, Level 3.1	(hev1.1.6.L93.B0)</option>
+		    <option value="vp09.00.50.08">VP9, Profile 0, Level 5, 8-bit (vp09.00.50.08)</option>
 		</select>
 		<br>
-		<label for="transfer-select">Transfer Function:</label>
-		<select id="transfer-select">
-		    <option value="">none</option>
-		    <option value="srgb">sRGB</option>
-		    <option value="pq">PQ</option>
-		    <option value="hlg">HLG</option>
+		<label for="fps-select">FPS parameter:</label>
+		<select id="fps-select">
+		    <option value="30">30 fps</option>
+		    <option value="60">60 fps</option>
+		    <option value="120">120 fps</option>
+		    <option value="240">240 fps</option>
 		</select>
+		<br>
+		<label for="bitrate-select">Bitrate:</label>
+		<select id="bitrate-select">
+		    <option value="100000">100 Kbps</option>
+		    <option value="1000000">1 Mbps</option>
+		    <option value="10000000">10 Mbps</option>
+		    <option value="100000000">100 Mbps</option>
+		</select>
+		<br>
+		<label for="maxdimension-select">Max width/height:</label>
+		<select id="maxdimension-select">
+		    <option value="1920x720">720p (1920x720)</option>
+		    <option value="1920x1080">1080p (1920x1080)</option>
+		    <option value="3840x2160">4K (3840x2160)</option>
+		    <option value="7680x4320">8K (7680x4320)</option>
+		    <option value="15360x8640">16K (15360x8640)</option>
+		</select>
+		<br>
+		<label for="advanced">Use Advanced Options (not working yet in Safari)</label>
+		<input type="checkbox" id="advanced" name="advanced">
+		<br>
+		<fieldset id="advancedset" disabled>
+			<legend>Advanced Options</legend>
+			<label for="alpha">Has Alpha Channel</label>
+			<input type="checkbox" id="alpha" name="alpha">
+			<br>
+			<label for="hdr-select">HDR Metadata Type:</label>
+			<select id="hdr-select">
+			    <option value="">none</option>
+			    <option value="smpteSt2086">SMPTE ST-2086</option>
+			    <option value="smpteSt2094-10">SMPTE ST-2094-10</option>
+			    <option value="smpteSt2094-40">SMPTE ST-2094-40</option>
+			</select>
+			<br>
+			<label for="color-select">Color Gamut:</label>
+			<select id="color-select">
+			    <option value="">none</option>
+			    <option value="srgb">sRGB</option>
+			    <option value="p3">P3</option>
+			    <option value="rec2020">REC 2020</option>
+			</select>
+			<br>
+			<label for="transfer-select">Transfer Function:</label>
+			<select id="transfer-select">
+			    <option value="">none</option>
+			    <option value="srgb">sRGB</option>
+			    <option value="pq">PQ</option>
+			    <option value="hlg">HLG</option>
+			</select>
+		</fieldset>
 	</fieldset>
 	<br>
 	<p>Media Capabilities Results:<p>

@@ -27,7 +27,9 @@ window.onload = function() {
 	const tranferselector = document.getElementById("transfer-select");
 	const alphaCheckbox = document.getElementById("alpha");
 	const advancedCheckbox = document.getElementById("advanced");
-
+	advancedCheckbox.onchange = function(e) { 
+		document.getElementById("advancedset").disabled = !e.target.checked;
+	}
 	const supportedCheckbox = document.getElementById("supported");
 	const smoothCheckbox = document.getElementById("smooth");
 	const powerEfficientCheckbox = document.getElementById("powerEfficient");
