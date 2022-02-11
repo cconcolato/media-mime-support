@@ -1,4 +1,4 @@
-function addAVCChecks(add,table)
+function getAllAVCCodecs()
 {
 	var AVC_PROFILES_DESC = [
 		//{ constrained_set0_flag: true },
@@ -26,6 +26,7 @@ function addAVCChecks(add,table)
 	var AVC_LEVELS = [ 10, 11, 12, 13, 20, 21, 22, 30, 31, 32, 40, 41, 42, 50, 51, 52];
 
 	var sj, sk, sl;
+	var mimes = [];
 	for (var j in AVC_PROFILES_IDC) {
 		var sj = AVC_PROFILES_IDC[j].toString(16);
 		if (sj.length == 1) sj = "0"+sj;
@@ -52,9 +53,13 @@ function addAVCChecks(add,table)
 				for (var l in AVC_LEVELS) {
 					sl = AVC_LEVELS[l].toString(16);
 					if (sl.length == 1) sl = "0"+sl;
-					add(table,'video/mp4; codecs="avc1.'+sj+sk+sl+'"', desc + " Level "+ AVC_LEVELS[l]/10);
+					mimes.push({
+						codec: 'avc1.'+sj+sk+sl,
+						description: desc + " Level "+ AVC_LEVELS[l]/10
+					});
 				}
 			}
 		}
 	}
+	return mimes;
 }

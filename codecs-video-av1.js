@@ -1,4 +1,4 @@
-function addAV1Checks(add,table)
+function getAllAV1Codecs()
 {
 	var PROFILES_VALUES = [ 0, 1, 2 ];
 	var PROFILES_NAMES = [ 'Main', 'High', 'Professional' ];
@@ -26,6 +26,7 @@ function addAV1Checks(add,table)
 	var MATRIX_COEFFICIENT_VALUES = [ 0, 1, 2];//, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ];
 	var VIDEO_FULL_RANGE_FLAG_VALUES = [ 0, 1 ];
 
+	var allValues = [];
 	for (var profile in PROFILES_VALUES) {
 		for (var level in LEVEL_VALUES) {
 			var levelString = ''+LEVEL_VALUES[level];
@@ -42,7 +43,8 @@ function addAV1Checks(add,table)
 									for (var transfer in TRANSER_CHARACTERISTICS_VALUES) {
 										for (var matrix in MATRIX_COEFFICIENT_VALUES) {
 											for (var range in VIDEO_FULL_RANGE_FLAG_VALUES) {
-												add(table,'video/mp4; codecs="av01.'+PROFILES_VALUES[profile]+
+												allValues.push({
+													codec: 'av01.'+PROFILES_VALUES[profile]+
 													'.'+levelString+
 													''+TIER_VALUES[tier]+
 													'.'+depthString+
@@ -51,22 +53,27 @@ function addAV1Checks(add,table)
 													'.'+COLOR_PRIMARIES_VALUES[colorPrimary]+
 													'.'+TRANSER_CHARACTERISTICS_VALUES[transfer]+
 													'.'+MATRIX_COEFFICIENT_VALUES[matrix]+
-													'.'+VIDEO_FULL_RANGE_FLAG_VALUES[range]+'"');
+													'.'+VIDEO_FULL_RANGE_FLAG_VALUES[range],
+													description: ''
+												});
 											}
 										}
 									}
 								}
 							}
 						} else {
-							add(table,'video/mp4; codecs="av01.'+PROFILES_VALUES[profile]+
+							allValues.push({
+								codec: 'av01.'+PROFILES_VALUES[profile]+
 								'.'+levelString+
 								''+TIER_VALUES[tier]+
-								'.'+depthString+'"', 
-								'AV1 '+PROFILES_NAMES[profile]+' Profile, level '+LEVEL_NAMES[level]+', '+TIER_NAMES[tier]+ ' tier, '+DEPTH_VALUES[depth]+' bits');
+								'.'+depthString,
+								description: 'AV1 '+PROFILES_NAMES[profile]+' Profile, level '+LEVEL_NAMES[level]+', '+TIER_NAMES[tier]+ ' tier, '+DEPTH_VALUES[depth]+' bits'
+							});
 						}
 					}
 				}
 			}
 		}
 	}
+	return allValues;
 }

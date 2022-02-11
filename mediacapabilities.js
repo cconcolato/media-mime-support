@@ -1,6 +1,22 @@
+function addCodecsGroup(select, desc, getter) {
+	if(getter) {
+		var group = document.createElement("optgroup");
+		group.label = desc;
+		select.appendChild(group);
+		getter().forEach(function(e) {
+			var opt = document.createElement("option");
+			opt.value = e.codec;
+			opt.innerHTML = e.description + " ("+e.codec+")";
+			group.appendChild(opt);
+		});
+	}
+}
+
 window.onload = function() {
 	const mimeselector = document.getElementById("mime-select");
 	const codecsselector = document.getElementById("codecs-select");
+	addCodecsGroup(codecsselector, "AV1 codecs", getAllAV1Codecs);
+	addCodecsGroup(codecsselector, "AVC codecs", getAllAVCCodecs);
 	const fpsselector = document.getElementById("fps-select");
 	const bitrateeselector = document.getElementById("bitrate-select");
 	const dimensionselector = document.getElementById("maxdimension-select");
