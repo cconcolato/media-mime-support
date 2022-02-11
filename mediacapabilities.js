@@ -8,6 +8,7 @@ window.onload = function() {
 	const colorselector = document.getElementById("color-select");
 	const tranferselector = document.getElementById("transfer-select");
 	const alphaCheckbox = document.getElementById("alpha");
+	const advancedCheckbox = document.getElementById("advanced");
 
 	const supportedCheckbox = document.getElementById("supported");
 	const smoothCheckbox = document.getElementById("smooth");
@@ -41,7 +42,7 @@ window.onload = function() {
 			for (let h = ctx.steph; h <= ctx.height_max; h+=ctx.steph) {
 				testConfig(mime, codecs,
 					w, h, bitrate, fps, 
-					alphaCheckbox.checked,
+					advancedCheckbox.checked, alphaCheckbox.checked,
 					hdrvalue, colorvalue, transfervalue,
 					ctx,
 					supportedCheckbox.checked,
@@ -54,11 +55,12 @@ window.onload = function() {
 	runbutton.onclick = run;
 }
 
-function testConfig(mime, codecs, vw, vh, b, fps, alpha, hdr, color, transfer,
+function testConfig(mime, codecs, vw, vh, b, fps, 
+					advanced, alpha, hdr, color, transfer,
 					ctx, wantsSupported, wantsPowerEfficient, wantsSmooth) {
 	const fullmime = mime+';codecs='+codecs;
 	//const fullmime = 'video/mp4;codecs=avc1.640028';
-	const configuration = {
+	let configuration = {
 		type: 'media-source',
 		video: {
 			contentType: fullmime,
@@ -66,12 +68,14 @@ function testConfig(mime, codecs, vw, vh, b, fps, alpha, hdr, color, transfer,
 			height: vh,
 			bitrate: b,
 			framerate: fps,
-			hasAlphaChannel: alpha,
-			hdrMetadataType: hdr,
-			colorGamut: color,
-			transferFunction: transfer
 		}
 	};
+	if (advanced) {
+		configuration.video.hasAlphaChannel = alpha;
+		configuration.video.hdrMetadataType = hdr;
+		configuration.video.colorGamut = color;
+		configuration.video.transferFunction = transfer;
+	}
 
 	navigator.mediaCapabilities.decodingInfo(configuration)
 		    .then((result) => {
