@@ -55,7 +55,7 @@ function getAllAVCCodecs()
 					if (sl.length == 1) sl = "0"+sl;
 					mimes.push({
 						codec: 'avc1.'+sj+sk+sl,
-						description: desc + " Level "+ AVC_LEVELS[l]/10
+						description: "AVC "+desc+" Level "+ AVC_LEVELS[l]/10
 					});
 				}
 			}
