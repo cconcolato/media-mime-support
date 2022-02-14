@@ -13,6 +13,7 @@ function addCodecsGroup(select, desc, getter) {
 }
 
 window.onload = function() {
+	const sourceselector = document.getElementById("source-select");
 	const mimeselector = document.getElementById("mime-select");
 	const codecsselector = document.getElementById("codecs-select");
 	addCodecsGroup(codecsselector, "VP9 codecs", getAllVP9Codecs);
@@ -38,6 +39,7 @@ window.onload = function() {
 	ctx.svg = document.getElementById('s');
 	
 	function run() {
+		const sourcevalue = sourceselector.value;
 		const mime = mimeselector.value;
 		const codecs = codecsselector.value;
 		const fps = fpsselector.value;
@@ -60,7 +62,7 @@ window.onload = function() {
 
 		for (let w = ctx.stepw; w <= ctx.width_max; w+=ctx.stepw) {
 			for (let h = ctx.steph; h <= ctx.height_max; h+=ctx.steph) {
-				testConfig(mime, codecs,
+				testConfig(sourcevalue, mime, codecs,
 					w, h, bitrate, fps, 
 					advancedCheckbox.checked, alphaCheckbox.checked,
 					hdrvalue, colorvalue, transfervalue,
@@ -75,13 +77,13 @@ window.onload = function() {
 	runbutton.onclick = run;
 }
 
-function testConfig(mime, codecs, vw, vh, b, fps, 
+function testConfig(sourcevalue, mime, codecs, vw, vh, b, fps,
 					advanced, alpha, hdr, color, transfer,
 					ctx, wantsSupported, wantsPowerEfficient, wantsSmooth) {
 	const fullmime = mime+';codecs='+codecs;
 	//const fullmime = 'video/mp4;codecs=avc1.640028';
 	let configuration = {
-		type: 'media-source',
+		type: sourcevalue,
 		video: {
 			contentType: fullmime,
 			width: vw,
