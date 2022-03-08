@@ -17,5 +17,8 @@ function getAllHEVCCodecs()
 
 	// TODO generate profiles
 
-	return [{ codec: "hev1.1.6.L93.B0", description: "HEVC progressive, non-packed stream, Main Profile, Main Tier, Level 3.1"}];
+	return [
+		{ codec: "hev1.1.6.L93.B0", description: "HEVC progressive, non-packed stream, Main Profile, Main Tier, Level 3.1"},
+		{ codec: "hev1.2.4.L120.B0", description: "HEVC Main10 Profile, Main Tier, Level 4.0"}
+	];
 }
