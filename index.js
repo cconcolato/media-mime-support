@@ -10,7 +10,12 @@ function addMimeChecks(table,mime,desc) {
 		mediasource_result = e.message; 
 	}
 	tr = document.createElement("tr");
-	tr.innerHTML = "<td id='"+mime+"'>"+desc+"</td><td><a href='#"+mime+"'>"+mime+"</a></td><td class='"+(video_result === ""? "fail" : (video_result === "maybe" ? "maybe": "ok"))+"'>"+(video_result.length > 0 ? video_result : "no")+"</td><td class='"+(mediasource_result === true ? "ok" : "fail")+"'>"+mediasource_result+"</td>";
+	tr.innerHTML = `
+<td id='${mime}'>${desc}</td>
+<td><a href='#${mime}'>${mime}</a></td>
+<td class='${(video_result === ``? `fail` : (video_result === `maybe` ? `maybe`: `ok`))}'>${(video_result.length > 0 ? video_result : `no`)}</td>
+<td class='${(mediasource_result === true ? `ok` : `fail`)}'>${mediasource_result}</td>
+`;
 	table.appendChild(tr);
 }
 
