@@ -1,5 +1,5 @@
 body {
-	max-width: 800px;
+	max-width: 1000px;
 	margin: auto;
 	font-family: sans-serif;
 }
@@ -7,9 +7,9 @@ body {
 table {
 	border-collapse:collapse;
 	width:100%;
-	max-width:700px;
 	min-width:400px;
 	text-align:center;
+	table-layout: fixed;
 }
 
 table, th, td {
@@ -20,6 +20,18 @@ th, td {
 	height: 24px;
 	padding:4px;
 	vertical-align:middle;
+}
+
+th:nth-child(3), 
+th:nth-child(4),
+td:nth-child(3), 
+td:nth-child(4) 
+{
+ 	width: 150px;
+}
+
+code {
+	word-break: break-all;
 }
 
 .ok {
@@ -33,3 +45,4 @@ th, td {
 .fail {
 	background-color: red;
 }
+
